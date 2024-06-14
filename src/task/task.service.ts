@@ -16,6 +16,15 @@ export class TaskService {
         return this.taskModel.find().exec();
     }
 
+    async search(query: string): Promise<Task[]> {
+        return this.taskModel.find({
+            $or: [
+                { title: { $regex: query, $options: 'i' } },
+                { description: { $regex: query, $options: 'i' } }
+            ]
+        }).exec();
+    }
+
     async findOne(id: string): Promise<Task> {
         return this.taskModel.findById(id).exec();
     }

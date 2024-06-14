@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, Query } from '@nestjs/common';
 import { TaskService } from './task.service';
 
 @Controller('tasks')
@@ -13,6 +13,11 @@ export class TaskController {
     @Get()
     async findAll() {
         return this.taskService.findAll();
+    }
+
+    @Get('search')
+    async search(@Query('query') query: string) {
+        return this.taskService.search(query);
     }
 
     @Get(':id')
